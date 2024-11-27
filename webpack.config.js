@@ -10,8 +10,7 @@ module.exports = {
     clean: true,
     filename: "[name].bundle.js",
     path: path.resolve(__dirname, "dist"),
-    publicPath: '/',
-    assetModuleFilename: 'assets/[hash][ext][query]'
+    publicPath: '/' // Важно для корректных путей
   },
   mode: "development",
   devServer: {
@@ -21,11 +20,6 @@ module.exports = {
     hot: true,
     historyApiFallback: true
   },
-  resolveLoader: {
-    alias: {
-      'sass-loader': require.resolve('sass-loader'),
-    },
-  },
   module: {
     rules: [
       {
@@ -33,21 +27,23 @@ module.exports = {
         use: ["style-loader", "css-loader", "sass-loader"],
       },
       {
-        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        test: /\.(png|svg|jpg|jpeg|gif|mp4)$/i,
         type: "asset/resource",
-      },
+        generator: {
+          filename: 'assets/images/[name][ext]' // Сохраняем оригинальную структуру
+        }
+      }
     ],
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: "God Of War",
       template: "src/index.html",
     }),
     new CopyWebpackPlugin({
       patterns: [
         { 
           from: "src/assets/images",
-          to: "assets" 
+          to: "assets/images"  // Копируем в правильную директорию
         },
         { 
           from: "_redirects",
