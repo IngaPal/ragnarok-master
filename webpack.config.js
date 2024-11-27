@@ -1,6 +1,6 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const path = require("path");
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const path = require("path");
 
 module.exports = {
   entry: {
@@ -10,6 +10,7 @@ module.exports = {
     clean: true,
     filename: "[name].bundle.js",
     path: path.resolve(__dirname, "dist"),
+    publicPath: '/',
     assetModuleFilename: 'assets/[hash][ext][query]'
   },
   mode: "development",
@@ -44,6 +45,10 @@ module.exports = {
     }),
     new CopyWebpackPlugin({
       patterns: [
+        { 
+          from: "src/assets/images",
+          to: "assets" 
+        },
         { 
           from: "_redirects",
           to: "" 
