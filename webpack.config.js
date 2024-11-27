@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -17,6 +18,7 @@ module.exports = {
     compress: true,
     port: 9000,
     hot: true,
+    historyApiFallback: true
   },
   resolveLoader: {
     alias: {
@@ -39,6 +41,14 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: "God Of War",
       template: "src/index.html",
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        { 
+          from: "_redirects",
+          to: "" 
+        }
+      ],
     }),
   ],
 };
